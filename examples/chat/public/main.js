@@ -132,7 +132,7 @@ $(function() {
     });
   }
 
-  //checks the branch to make sure the user has selected one 
+  //checks the branch to make sure the user has selected one
   function checkBranch()
   {
       if($("#tree").jstree("get_selected") != "")
@@ -281,7 +281,7 @@ $(function() {
   socket.on('login', function (data) {
     connected = true;
     // Display the welcome message
-    var message = "Welcome to Socket.IO Chat – ";
+    var message = "Welcome to Tree Chat";
     log(message, {
       prepend: true
     });
