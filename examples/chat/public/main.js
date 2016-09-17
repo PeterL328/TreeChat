@@ -25,11 +25,17 @@ $(function() {
 
   var socket = io();
 
+
   $('#tree').jstree({
     'core' : {
       'check_callback': true
       }
+
+     // if (data.action === "select_node"){
+       // data.instance.set_icon(data.node, 'http://jstree.com/tree-icon.png');
+      //}
   });
+
 
   function addParticipantsMessage (data) {
     var message = '';
@@ -239,6 +245,7 @@ $(function() {
   $( "#add" ).click(function() {
     var node = { id:$("#node-text").val(), text: $("#node-text").val()};
     $('#tree').jstree('create_node', $("#tree").jstree("get_selected"), node, 'last');
+    $('#tree').jstree(true).set_icon(node, "//jstree.com/tree.png");
   });
 
   $( "#delete" ).click(function() {
