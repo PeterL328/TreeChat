@@ -24,6 +24,7 @@ $(function() {
   var $currentInput = $usernameInput.focus();
 
   var socket = io();
+
   $('#tree').jstree({
     'core' : {
       'check_callback': true
@@ -240,6 +241,10 @@ $(function() {
     $('#tree').jstree('create_node', $("#tree").jstree("get_selected"), node, 'last');
   });
 
+  $( "#delete" ).click(function() {
+    debugger;
+    $('#tree').jstree(true).delete_node($('#tree').jstree(true).get_selected());
+  });
   // Keyboard events
 
   $window.keydown(function (event) {
