@@ -24,7 +24,11 @@ $(function() {
   var $currentInput = $usernameInput.focus();
 
   var socket = io();
-  $('#tree').jstree();
+  $('#tree').jstree({
+    'core' : {
+      'check_callback': true
+      }
+  });
 
   function addParticipantsMessage (data) {
     var message = '';
@@ -77,27 +81,69 @@ $(function() {
 
   // Adds the visual chat message to the message list
   function addChatMessage (data, options) {
-    // Don't fade the message in if there is an 'X was typing'
-    var $typingMessages = getTypingMessages(data);
-    options = options || {};
-    if ($typingMessages.length !== 0) {
-      options.fade = false;
-      $typingMessages.remove();
+    if(checkBranch()){
+        // Don't fade the message in if there is an 'X was typing'
+      var $typingMessages = getTypingMessages(data);
+      options = options || {};
+      if ($typingMessages.length !== 0) {
+        options.fade = false;
+        $typingMessages.remove();
+      }
+
+      var $usernameDiv = $('<span class="username"/>')
+        .text(data.username)
+        .css('color', getUsernameColor(data.username));
+      var $messageBodyDiv = $('<span class="messageBody">')
+        .text(data.message);
+
+      var typingClass = data.typing ? 'typing' : '';
+      var $messageDiv = $('<li class="message"/>')
+        .attr('id', $("#tree").jstree("get_selected"))
+        .data('username', data.username)
+        .addClass(typingClass)
+        .append($usernameDiv, $messageBodyDiv);
+
+      addMessageElement($messageDiv, options);
+      showContent();
     }
+  }
 
-    var $usernameDiv = $('<span class="username"/>')
-      .text(data.username)
-      .css('color', getUsernameColor(data.username));
-    var $messageBodyDiv = $('<span class="messageBody">')
-      .text(data.message);
+  //Event to handle changes to tree
+  $("#tree").on("select_node.jstree",
+     function(evt, data){
+        showContent();
+     }
+);
 
-    var typingClass = data.typing ? 'typing' : '';
-    var $messageDiv = $('<li class="message"/>')
-      .data('username', data.username)
-      .addClass(typingClass)
-      .append($usernameDiv, $messageBodyDiv);
+  //Shows necessary content
+  function showContent()
+  {
+    $(".messages").children().each(function( ) {
 
-    addMessageElement($messageDiv, options);
+      if($( this ).attr('id') == $("#tree").jstree("get_selected"))
+      {
+        $(this).show();
+      }
+      else
+      {
+        $(this).hide();
+      }
+
+    });
+  }
+
+  //checks the branch to make sure the user has selected one 
+  function checkBranch()
+  {
+      if($("#tree").jstree("get_selected") != "")
+      {
+        return true;
+      }
+      else
+      {
+        alert("select a branch");
+        return false;
+      }
   }
 
   // Adds the visual chat typing message
@@ -190,10 +236,8 @@ $(function() {
   }
 
   $( "#add" ).click(function() {
-    debugger;
-    var parent = $("#tree").jstree("get_selected");
-    var node = { id:123,text:"Hello world"};
-    $('#tree').jstree('create_node', "#root", node, 'last');
+    var node = { id:$("#node-text").val(), text: $("#node-text").val()};
+    $('#tree').jstree('create_node', $("#tree").jstree("get_selected"), node, 'last');
   });
 
   // Keyboard events
