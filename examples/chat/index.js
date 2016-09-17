@@ -28,6 +28,15 @@ io.on('connection', function (socket) {
     });
   });
 
+  // when the client emits 'new message', this listens and executes
+  socket.on('new node', function (data) {
+    // we tell the client to execute 'new message'
+    socket.broadcast.emit('new node', {
+      username: socket.username,
+      message: data
+    });
+  });
+
   // when the client emits 'add user', this listens and executes
   socket.on('add user', function (username) {
     if (addedUser) return;

@@ -120,7 +120,13 @@ $(function() {
      function(evt, data){
         showContent();
      }
-);
+  );
+
+  $("#tree").on("create_node.jstree",
+     function(evt, data){
+        socket.emit('new node', data);
+     }
+  );
 
   //Shows necessary content
   function showContent()
@@ -249,7 +255,6 @@ $(function() {
   });
 
   $( "#delete" ).click(function() {
-    debugger;
     $('#tree').jstree(true).delete_node($('#tree').jstree(true).get_selected());
   });
   // Keyboard events
