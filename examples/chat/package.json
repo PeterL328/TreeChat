@@ -1,9 +1,0 @@
-{
-  "name": "Tree Chat",
-  "version": "0.0.0",
-  "description": "Tree Chat - a revolutionary new way to chat",
-  "main": "index.js",
-  "dependencies": {
-    "express": "4.13.4"
-  }
-}
