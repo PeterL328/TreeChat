@@ -10,7 +10,7 @@
 <a href="http://devpost.com/software/treechat">Devpost Link</a></br>
 
 ## Try it out!
-<a href="http://www.treechat.net/">Tree Chat</a></br>
+<a href="https://tree-chat.herokuapp.com/">Tree Chat</a></br>
 ##Inspiration
 
 Ever been in a group chat with several people? I have and it can be annoying at times! Everytime when someone posts something important it often gets drowned by a slew of messages. So we came up with an idea to alleviate that issue, by allowing users to branch conversations. This also allows users to graphically follow the conversation and users who are new to the group will have no trouble following the conversation.
